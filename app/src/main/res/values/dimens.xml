@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fragment_width">780dp</dimen>
+    <dimen name="fragment_height">495dp</dimen>
+
+    <dimen name="photo_size">64dp</dimen>
+    <dimen name="default_margin">16dp</dimen>
+    <dimen name="user_function_height">70dp</dimen>
+</resources>

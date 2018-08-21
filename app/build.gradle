@@ -1,0 +1,119 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.giles.android.pagedlistwithnetwork"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+
+        applicationVariants.all {
+            variant ->
+                variant.outputs.all {
+                    output ->
+                        //調整名稱發布檔名
+                        outputFileName = "GilesPagedlistWithNetwork".concat(".v").concat(versionName).concat("(").concat(versionCode.toString()).concat(").").concat(name).concat(".apk")
+
+                }
+        }
+
+    }
+    dataBinding {
+        enabled = true
+    }
+    kapt {
+        generateStubs = true
+    }
+
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Support library
+    implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+
+    // Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Testing
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$rootProject.mockServerVersion"
+    androidTestImplementation "org.mockito:mockito-android:$rootProject.mockitoVersion"
+    testImplementation "org.mockito:mockito-core:$rootProject.mockitoVersion"
+
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$rootProject.archVersion"
+    androidTestImplementation "android.arch.core:core-testing:$rootProject.archVersion"
+    testImplementation "android.arch.core:core-testing:$rootProject.archVersion"
+    kapt "android.arch.lifecycle:compiler:$rootProject.archVersion"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:$rootProject.archVersion"
+    implementation "android.arch.persistence.room:rxjava2:$rootProject.archVersion"
+    androidTestImplementation "android.arch.persistence.room:testing:$rootProject.archVersion"
+    kapt "android.arch.persistence.room:compiler:$rootProject.archVersion"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofitVersion"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+    // Gson, to prevent different gson version between libraries.
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    // RxJava2
+    implementation "io.reactivex.rxjava2:rxjava:2.1.7"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+
+    //Paging
+    implementation "android.arch.paging:runtime:1.0.1"
+    kapt "android.arch.paging:runtime:1.0.1"
+}
